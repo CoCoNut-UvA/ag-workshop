@@ -1,0 +1,4 @@
+[submodule "coconut"]
+	path = coconut
+	url = git@github.com:CoCoNut-UvA/coconut.git
+	branch = master

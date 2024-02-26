@@ -1,0 +1,9 @@
+string a = "foo";
+
+string v() {
+    string b = "bar";
+    return (a + b);
+}
+
+string c = v();
+string d = (b + c);

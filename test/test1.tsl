@@ -1,0 +1,14 @@
+int a = (43-2);
+bool b = true;
+string c = ("alpha" + "beta");
+
+int foo() {
+    int bar() {
+        return 42;
+    }
+
+    bool baz = false;
+    return (bar() + 3);
+}
+
+int d = foo();

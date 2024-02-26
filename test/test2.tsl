@@ -1,0 +1,15 @@
+int calc() {
+    int x = 33;
+    int y = 16;
+    int var() {
+        int z = (y - 3);
+
+        return (x + z);
+    }
+
+    return (x + (y + var()));
+}
+
+bool a1 = false;
+bool a2 = (a1 + true);
+int b = calc();

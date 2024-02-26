@@ -1,0 +1,5 @@
+string name() {
+    return "Alice";
+}
+
+bool foo = name();

@@ -1,0 +1,136 @@
+start phase RootPhase {
+    info = "Denotes the entry point of your compiler",
+
+    actions {
+        pass SPdoScanParse;
+        checkError;
+        print;
+    }
+};
+
+traversal Print {
+    uid = PRT,
+    travdata {
+        uint32 indent
+    }
+};
+
+traversal checkError {
+    uid = CE,
+    nodes = {Program}
+};
+
+/*** AST ***/
+
+enum BinOpType {
+    prefix = BO,
+    values { add, sub, mul, div, mod }
+};
+
+enum BasicType {
+    prefix = BT,
+    values { int, bool, string }
+};
+
+nodeset Expr {
+    nodes = {Num, String, Bool, Binop, Var, FunCall},
+    attributes {
+        BasicType type { } // TODO: make synthesized
+    }
+};
+
+nodeset Stmt {
+    nodes = {Assign, FunDef, Return}
+};
+
+root node Program {
+    children {
+        Stmts stmts { constructor, mandatory }
+    },
+    attributes {
+        bool error { synthesized }
+    },
+    equations {
+        this.error = {args = {}} // TODO: add correct arguments
+    }
+};
+
+node Stmts {
+    children {
+        Stmt stmt { constructor, mandatory },
+        Stmts next { constructor }
+    }
+};
+
+node FunDef {
+    children {
+        Stmts body { constructor, mandatory }
+    },
+    attributes {
+        string name { constructor },
+        BasicType type { constructor }
+    }
+};
+
+node Assign {
+    children {
+        VarLet let { constructor },
+        Expr expr { constructor, mandatory }
+    },
+    attributes {
+        BasicType type { constructor }
+    }
+};
+
+node Return {
+    children {
+        Expr expr { constructor, mandatory }
+    }
+};
+
+node Binop {
+    children {
+        Expr left { constructor, mandatory },
+        Expr right { constructor, mandatory }
+    },
+
+    attributes {
+        BinOpType op { constructor }
+    }
+};
+
+node VarLet {
+    attributes {
+        string name { constructor }
+    }
+};
+
+node Var {
+    attributes {
+        string name { constructor }
+    }
+};
+
+node FunCall {
+    attributes {
+        string name { constructor }
+    }
+};
+
+node Num {
+    attributes {
+        int val { constructor }
+    }
+};
+
+node Bool {
+    attributes {
+        bool val { constructor }
+    }
+};
+
+node String {
+    attributes {
+        string val { constructor }
+    }
+};
